@@ -21,12 +21,11 @@ def wait():
 
 def wordlist_gen():
     with open('wordlist1.txt', 'r') as f:
-
         global wordlist
-        wordlist = []
+        wordlist = f.readlines()
 
-        for word in f.readlines():
-            wordlist.append(word.strip())
+        #for word in f.readlines():
+        #    wordlist.append(word.strip())
 
 
 def wordle_gen():
@@ -87,9 +86,7 @@ def square_gen(wordle, guess):
     # return a yellow square for the first 's' and a blank one for the second.
     m = {}
 
-    i = -1
     for letter in guess:
-        i += 1
         m[letter] = wordle.count(letter)
 
     i = -1
@@ -101,11 +98,15 @@ def square_gen(wordle, guess):
             m[letter] -= 1
         elif letter in wordle and m[letter] > 0:
             output += squares["yellow"]
-            used_letters[letter]  = squares["yellow"]
             m[letter] -= 1
+            if used_letters[letter] != squares["green"]:
+                used_letters[letter]  = squares["yellow"]
         else:
             output += squares["black"]
-            used_letters[letter]  = squares["black"]
+            print(used_letters[letter])
+            if used_letters[letter] == squares["white"]: 
+                print('here')
+                used_letters[letter]  = squares["black"]
     return output
 
 
