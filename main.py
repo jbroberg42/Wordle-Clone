@@ -12,7 +12,7 @@ squares = {
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-restrict_guess_to_wordlist = False
+restrict_guess_to_wordlist = True 
 darkmode = False
 
 def wait():
@@ -22,17 +22,16 @@ def wait():
 def wordlist_gen():
     with open('wordlist1.txt', 'r') as f:
         global wordlist
-        wordlist = f.readlines()
+        wordlist = [] 
 
-        #for word in f.readlines():
-        #    wordlist.append(word.strip())
+        for word in f.readlines():
+            wordlist.append(word.strip())
 
 
 def wordle_gen():
 
     # select the wordle at random from wordlist
     wordle = wordlist[random.randint(0, len(wordlist)-1)].strip()
-
     return wordle
 
 
@@ -42,8 +41,7 @@ def take_guess():
         guess = input("          Guess a five-letter word: ")
         if len(guess) != 5:
             print("          Your guess must be a five-letter word!")
-        elif restrict_guess_to_wordlist == True:
-            if guess not in wordlist:
+        elif restrict_guess_to_wordlist == True and guess not in wordlist:
                 print("          Not in wordlist.  Try again!")
         else:
             break
@@ -103,9 +101,7 @@ def square_gen(wordle, guess):
                 used_letters[letter]  = squares["yellow"]
         else:
             output += squares["black"]
-            print(used_letters[letter])
             if used_letters[letter] == squares["white"]: 
-                print('here')
                 used_letters[letter]  = squares["black"]
     return output
 
